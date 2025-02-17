@@ -1,0 +1,1773 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "BPMS API",
+        "description": "API documentation for BPMS app",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/cost-center": {
+            "get": {
+                "tags": [
+                    "Cost Center Hierarchy"
+                ],
+                "summary": "Get All Data From Table MapCostCenterHierarchy",
+                "description": "Retrieve all data from the MapCostCenterHierarchy table, including relationships.",
+                "operationId": "getAllCostCenterHierarchy",
+                "parameters": [
+                    {
+                        "name": "cost_center",
+                        "in": "query",
+                        "description": "Filter by cost center ID",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "TCB1000000"
+                        }
+                    },
+                    {
+                        "name": "cost_center_name",
+                        "in": "query",
+                        "description": "Filter by cost center name",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "SVP MARKETING"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "cost_center": {
+                                                "type": "string",
+                                                "example": "AB00000000"
+                                            },
+                                            "cost_center_name": {
+                                                "type": "string",
+                                                "example": "Sales Department",
+                                                "nullable": true
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cost Center not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dots-approval": {
+            "post": {
+                "tags": [
+                    "Views For Employee"
+                ],
+                "summary": "Get approval data based on cost centers",
+                "description": "Retrieves approval data for given cost centers with employee information and titles",
+                "operationId": "getApprovals",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "approval1"
+                                ],
+                                "properties": {
+                                    "approval1": {
+                                        "description": "Cost center for first approval level",
+                                        "type": "string",
+                                        "example": "TCD0010200"
+                                    },
+                                    "approval2": {
+                                        "description": "Cost center for second approval level",
+                                        "type": "string",
+                                        "example": "TCD0010000",
+                                        "nullable": true
+                                    },
+                                    "approval3": {
+                                        "description": "Cost center for third approval level",
+                                        "type": "string",
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "approval4": {
+                                        "description": "Cost center for fourth approval level",
+                                        "type": "string",
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "approval5": {
+                                        "description": "Cost center for fifth approval level",
+                                        "type": "string",
+                                        "example": null,
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "approval1": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "ARGA FAJAR SYAH"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "PLT. INFORMATION TECHNOLOGY GROUP HEAD"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "afajarsyah@tugu.com"
+                                                            },
+                                                            "bp": {
+                                                                "type": "string",
+                                                                "example": "1300000092"
+                                                            },
+                                                            "approval_level": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "cost_center": {
+                                                                "type": "string",
+                                                                "example": "TCD0010000"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "approval2": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "ARGA FAJAR SYAH"
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "PLT. INFORMATION TECHNOLOGY GROUP HEAD"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "afajarsyah@tugu.com"
+                                                            },
+                                                            "bp": {
+                                                                "type": "string",
+                                                                "example": "1300000092"
+                                                            },
+                                                            "approval_level": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "cost_center": {
+                                                                "type": "string",
+                                                                "example": "TCD0010000"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation failed"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "approval1": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The approval1 field must only contain letters and numbers."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cost center TCD0010200 not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An unexpected error occurred"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/dots-approval/multiple": {
+            "post": {
+                "tags": [
+                    "Views For Employee"
+                ],
+                "summary": "Get approval data for multiple cost centers",
+                "operationId": "eae11b093a60f0256bb22faa7e24779c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "cost_centers"
+                                ],
+                                "properties": {
+                                    "cost_centers": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "example": "CC001"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "cost_center": {
+                                                        "type": "string",
+                                                        "example": "CC001"
+                                                    },
+                                                    "cost_center_name": {
+                                                        "type": "string",
+                                                        "example": "Finance Department"
+                                                    },
+                                                    "cost_center_apv_1": {
+                                                        "type": "string",
+                                                        "example": "APV1"
+                                                    },
+                                                    "cost_center_apv_2": {
+                                                        "type": "string",
+                                                        "example": "APV2"
+                                                    },
+                                                    "BP": {
+                                                        "type": "string",
+                                                        "example": "BP001"
+                                                    },
+                                                    "employee_name": {
+                                                        "type": "string",
+                                                        "example": "John Doe"
+                                                    },
+                                                    "role_user": {
+                                                        "type": "string",
+                                                        "example": "DH"
+                                                    },
+                                                    "title_name": {
+                                                        "type": "string",
+                                                        "example": "Finance Manager"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "john.doe@company.com"
+                                                    },
+                                                    "sex": {
+                                                        "type": "string",
+                                                        "example": "MALE"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation Error"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/map-employee-title": {
+            "get": {
+                "tags": [
+                    "Views For Employee"
+                ],
+                "summary": "Get employee title mapping by BP and cost center",
+                "description": "Retrieves employee title mapping data based on the provided BP (Business Partner) number and cost center",
+                "operationId": "294a4112dda9a1ab928801a0cadd8454",
+                "parameters": [
+                    {
+                        "name": "BP",
+                        "in": "query",
+                        "description": "Business Partner number",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "cost_center",
+                        "in": "query",
+                        "description": "Cost Center code",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "BP": {
+                                                        "type": "string",
+                                                        "example": "12345"
+                                                    },
+                                                    "cost_center": {
+                                                        "type": "string",
+                                                        "example": "CC001"
+                                                    },
+                                                    "title_id": {
+                                                        "type": "string",
+                                                        "example": "T001"
+                                                    },
+                                                    "seq_nbr": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "type": {
+                                                        "type": "string",
+                                                        "example": "PERMANENT"
+                                                    },
+                                                    "start_effective_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-01-01"
+                                                    },
+                                                    "end_effective_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2024-12-31"
+                                                    },
+                                                    "remark": {
+                                                        "type": "string",
+                                                        "example": "Some remarks"
+                                                    },
+                                                    "status_pekerjaan": {
+                                                        "type": "string",
+                                                        "example": "ACTIVE"
+                                                    },
+                                                    "map_cost_center_hierarchy": {
+                                                        "properties": {
+                                                            "cost_center": {
+                                                                "type": "string",
+                                                                "example": "CC001"
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "Finance Department"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "m_employee_general_info": {
+                                                        "properties": {
+                                                            "BP": {
+                                                                "type": "string",
+                                                                "example": "12345"
+                                                            },
+                                                            "employee_name": {
+                                                                "type": "string",
+                                                                "example": "John Doe"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "m_title": {
+                                                        "properties": {
+                                                            "title_id": {
+                                                                "type": "string",
+                                                                "example": "T001"
+                                                            },
+                                                            "title_name": {
+                                                                "type": "string",
+                                                                "example": "Manager"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data not found for the specified BP and cost center"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation Error"
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "BP": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The BP field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Error message details"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/bp/email/{email}": {
+            "get": {
+                "tags": [
+                    "Employee General Info"
+                ],
+                "summary": "Get all BP by email",
+                "description": "Get BP from Table MEmployeeGeneralInfo.",
+                "operationId": "Get BP employee",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "abdullah@tugu.com"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/role/{email}": {
+            "get": {
+                "tags": [
+                    "Employee General Info"
+                ],
+                "summary": "Get an BP role TOA by email",
+                "description": "Get BP role TOA from Table map_employee_application, map_cost_center_application.",
+                "operationId": "Get BP role TOA",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "nrsari@tugu.com"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/role/all/{email}": {
+            "get": {
+                "tags": [
+                    "Employee General Info"
+                ],
+                "summary": "Get an BP role TOA by email",
+                "description": "Get BP role TOA from Table map_employee_application, map_cost_center_application.",
+                "operationId": "Get All role TOA",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "nrsari@tugu.com"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/list-application/{email}": {
+            "get": {
+                "tags": [
+                    "Employee General Info"
+                ],
+                "summary": "Get all application TOA by email",
+                "description": "Get BP role TOA from Table map_employee_application, map_cost_center_application.",
+                "operationId": "Get All application TOA",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "nrsari@tugu.com"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/bp/{cost_center}": {
+            "get": {
+                "tags": [
+                    "Employee General Info"
+                ],
+                "summary": "Get an BP by cost center, bp, name",
+                "description": "Get BP from Table MEmployeeGeneralInfo.",
+                "operationId": "Get BP cost center",
+                "parameters": [
+                    {
+                        "name": "cost_center",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "TCA0010200"
+                        }
+                    },
+                    {
+                        "name": "bp",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "3464554587"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "BU"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/bank-info/{bp}": {
+            "get": {
+                "tags": [
+                    "Employee General Info"
+                ],
+                "summary": "Get bank info by bp",
+                "description": "Get bank info from api SAP.",
+                "operationId": "Get bank info",
+                "parameters": [
+                    {
+                        "name": "bp",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "1300000086"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/application": {
+            "get": {
+                "tags": [
+                    "Employee General Info"
+                ],
+                "summary": "Get all application",
+                "description": "Get all application from table m_application.",
+                "operationId": "Get all application",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/bp/cost-center/{bp}": {
+            "get": {
+                "tags": [
+                    "Employee General Info"
+                ],
+                "summary": "Get Cost Center by Business Partner",
+                "description": "Get Cost Center by Business Partner.",
+                "operationId": "Get Cost Center by BP",
+                "parameters": [
+                    {
+                        "name": "bp",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "3464554587"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cost Center not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/employee": {
+            "get": {
+                "tags": [
+                    "Employee General Info"
+                ],
+                "summary": "Get all employees with filtering options",
+                "description": "Retrieves a list of employees with optional filtering by cost center and partner (BP)",
+                "operationId": "getAllEmployee",
+                "parameters": [
+                    {
+                        "name": "cost_center",
+                        "in": "query",
+                        "description": "Cost center code to filter employees",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "ABC123"
+                        }
+                    },
+                    {
+                        "name": "partner",
+                        "in": "query",
+                        "description": "Partner/BP number to filter employees",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "1234567890"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "partner": {
+                                                "description": "Employee BP number",
+                                                "type": "string",
+                                                "example": "1234567890"
+                                            },
+                                            "name_first": {
+                                                "description": "Employee name",
+                                                "type": "string",
+                                                "example": "John Doe"
+                                            },
+                                            "email": {
+                                                "description": "Employee email",
+                                                "type": "string",
+                                                "example": "john.doe@example.com"
+                                            },
+                                            "nip": {
+                                                "description": "Employee NIP",
+                                                "type": "string",
+                                                "example": "NIP123456"
+                                            },
+                                            "bpext": {
+                                                "description": "Employee external partner number",
+                                                "type": "string",
+                                                "example": "BPEXT123456"
+                                            },
+                                            "exp_date": {
+                                                "description": "End effective date",
+                                                "type": "string",
+                                                "format": "date",
+                                                "example": "2024-12-31"
+                                            },
+                                            "cost_center": {
+                                                "description": "Cost center code",
+                                                "type": "string",
+                                                "example": "ABC123"
+                                            },
+                                            "division": {
+                                                "description": "Division/Cost center name",
+                                                "type": "string",
+                                                "example": "IT Division"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Employee Auth"
+                ],
+                "summary": "Login to the system",
+                "description": "This endpoint allows a user to login with an email and tokens (refresh_token and access_token).",
+                "operationId": "ba5ee72bbb3d9e0e7590a96119c989fa",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "refresh_token",
+                                    "access_token"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@example.com"
+                                    },
+                                    "refresh_token": {
+                                        "type": "string",
+                                        "example": "sample_refresh_token"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Login successful"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "refresh_token": {
+                                                    "type": "string",
+                                                    "example": "new_refresh_token"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Invalid email or tokens"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal server error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/cost-center-approval/{bp}": {
+            "get": {
+                "tags": [
+                    "Employee Auth"
+                ],
+                "summary": "Get cost center approval by BP/Partner",
+                "description": "Returns cost center approval information for a specific BP/Partner",
+                "operationId": "getCostCenterApproval",
+                "parameters": [
+                    {
+                        "name": "bp",
+                        "in": "path",
+                        "description": "BP/Partner identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "cost_center_approval": {
+                                            "properties": {
+                                                "bp": {
+                                                    "type": "string",
+                                                    "example": "BP001"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "user@example.com"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "cost_center": {
+                                                    "type": "string",
+                                                    "example": "CC001"
+                                                },
+                                                "approval1": {
+                                                    "type": "string",
+                                                    "example": "APP001"
+                                                },
+                                                "approval2": {
+                                                    "type": "string",
+                                                    "example": "APP002",
+                                                    "nullable": true
+                                                },
+                                                "approval3": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "approval4": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "approval5": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cost center approval not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Cost center approval not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/approvers": {
+            "post": {
+                "tags": [
+                    "Employee Auth"
+                ],
+                "summary": "Get list of approvers based on cost center",
+                "description": "Returns approver details for each approval level provided",
+                "operationId": "getApprovers",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "bp",
+                                    "cost_center",
+                                    "email",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "approval1": {
+                                        "description": "Cost center for first approval level",
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "example": "TCD0010200"
+                                    },
+                                    "approval2": {
+                                        "description": "Cost center for second approval level",
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "example": "TCD0010000"
+                                    },
+                                    "approval3": {
+                                        "description": "Cost center for third approval level",
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "approval4": {
+                                        "description": "Cost center for fourth approval level",
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "approval5": {
+                                        "description": "Cost center for fifth approval level",
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "bp": {
+                                        "description": "Employee BP number",
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "example": "1300001000"
+                                    },
+                                    "cost_center": {
+                                        "description": "Employee cost center",
+                                        "type": "string",
+                                        "maxLength": 10,
+                                        "example": "TCD0010200"
+                                    },
+                                    "email": {
+                                        "description": "Employee email",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "employee@tugu.com"
+                                    },
+                                    "name": {
+                                        "description": "Employee name",
+                                        "type": "string",
+                                        "example": "EMPLOYEE NAME"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "APPROVER NAME"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "format": "email",
+                                                        "example": "approver@tugu.com"
+                                                    },
+                                                    "bp": {
+                                                        "type": "string",
+                                                        "example": "1234567890"
+                                                    },
+                                                    "approval_level": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "cost_center": {
+                                                        "type": "string",
+                                                        "example": "TCD0010200"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "bp": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The bp field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal server error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/mail-head-cost-center": {
+            "post": {
+                "tags": [
+                    "Mail Head Cost Center"
+                ],
+                "summary": "Get mail head data by cost center",
+                "operationId": "5a9b13b4d4a822416141b27c95089c88",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "cost_center"
+                                ],
+                                "properties": {
+                                    "cost_center": {
+                                        "description": "Cost center code",
+                                        "type": "string",
+                                        "example": "CC001"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "success"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data retrieved successfully"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "cost_center": {
+                                                        "type": "string",
+                                                        "example": "CC001"
+                                                    },
+                                                    "employee_name": {
+                                                        "type": "string",
+                                                        "example": "Bapak John Doe, Ibu Jane Smith"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "john.doe@example.com;jane.smith@example.com"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Validation Error"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Data not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data not found for the specified cost center"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "example": "error"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Internal Server Error"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/image": {
+            "post": {
+                "tags": [
+                    "Users Images"
+                ],
+                "summary": "Create or update image data",
+                "description": "Creates a new image record or updates an existing one based on the 'bp' value.",
+                "operationId": "1b30a2e33466a980719efddab96aa395",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "bp",
+                                    "image_data"
+                                ],
+                                "properties": {
+                                    "bp": {
+                                        "type": "string",
+                                        "example": "1300001000"
+                                    },
+                                    "image_data": {
+                                        "type": "string",
+                                        "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data saved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Data saved successfully."
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Employee not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Employee not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "An error occurred.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 500
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/image/{bp}": {
+            "get": {
+                "tags": [
+                    "Users Images"
+                ],
+                "summary": "Get image data by BP",
+                "description": "Returns image data for the given BP value.",
+                "operationId": "f9bec7bce053377718ac16790b7348f1",
+                "parameters": [
+                    {
+                        "name": "bp",
+                        "in": "path",
+                        "description": "BP value",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "1300001000"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "bp": {
+                                                    "type": "string",
+                                                    "example": "1300001000"
+                                                },
+                                                "image_data": {
+                                                    "type": "string",
+                                                    "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "BP not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "BP not found."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Cost Center Hierarchy",
+            "description": "From Table MapCostCenterHierarchy"
+        },
+        {
+            "name": "Views For Employee",
+            "description": "Views For Employee"
+        },
+        {
+            "name": "Employee General Info",
+            "description": "Employee General Info"
+        },
+        {
+            "name": "Employee Auth",
+            "description": "Employee Auth"
+        },
+        {
+            "name": "Mail Head Cost Center",
+            "description": "Mail Head Cost Center"
+        },
+        {
+            "name": "Users Images",
+            "description": "Users Images"
+        }
+    ]
+}
